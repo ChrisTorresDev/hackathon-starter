@@ -15,6 +15,8 @@ class App extends React.Component {
       country: undefined,
       humidity: undefined,
       description: undefined,
+      sunrise: undefined,
+      sunset: undefined,
       error: undefined,
     }
     this.getWeather = this.getWeather.bind(this);
@@ -25,32 +27,16 @@ class App extends React.Component {
     const city = e.target.city.value;
     const country = e.target.country.value;
     axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_Key}`)
-      // .then((res) => {
-      //   console.log(res.data);
-      //   this.setState({
-      //     temperature: res.data.main.temp,
-      //     city: res.data.name,
-      //     country: res.data.sys.country,
-      //     humidity: res.data.main.humidity,
-      //     description: res.data.weather[0].description,
-      //     error: ''
-      //   });
-      // });
       .then(res => {
-        const temperature = res.data.main.temp;
-        const city = res.data.name;
-        const country = res.data.sys.country;
-        const humidity = res.data.main.humidity;
-        const description = res.data.weather[0].description;
         if (city && country) {
           this.setState({
-            temperature: temperature,
-            city: city,
-            country: country,
-            humidity: humidity,
-            description: description,
-            error: ''
-          });
+                temperature: res.data.main.temp,
+                city: res.data.name,
+                country: res.data.sys.country,
+                humidity: res.data.main.humidity,
+                description: res.data.weather[0].description,
+                error: ''
+              });
         } else {
           this.setState({
             temperature: undefined,
@@ -62,7 +48,24 @@ class App extends React.Component {
           });
         }
       });
+
+    const url = `https://sun.p.rapidapi.com/api/sun/?city=${city}`;
+    const config = {
+      "headers": {
+        "x-rapidapi-host": "sun.p.rapidapi.com",
+        "x-rapidapi-key": "ab5833d991mshc1da61291d862e9p14c626jsn634e2dd0aad4"
+      }
+    }
+    axios.get(url, config)
+      .then(res => {
+        this.setState({
+          sunrise: res.data[3].sunrise,
+          sunset: res.data[1].sunset
+        });
+      });
+
   }
+
   render() {
     return (
       <div>
@@ -73,6 +76,8 @@ class App extends React.Component {
           country={this.state.country}
           humidity={this.state.humidity}
           description={this.state.description}
+          sunrise={this.state.sunrise}
+          sunset={this.state.sunset}
           error={this.state.error}
         />
       </div>
