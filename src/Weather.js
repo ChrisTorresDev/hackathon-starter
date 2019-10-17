@@ -3,14 +3,54 @@ import React from 'react';
 class Weather extends React.Component {
   render() {
     return (
-      <div>
-        { this.props.city && this.props.country && <p>Location: { this.props.city }, { this.props.country }</p> }
-        { this.props.temperature && <p>Temperature: { this.props.temperature }</p> }
-        { this.props.humidity && <p>Humidity: { this.props.humidity }</p> }
-        { this.props.description && <p>Conditions: { this.props.description }</p> }
-        { this.props.error && <p>{ this.props.error }</p> }
-        { this.props.sunrise && <p>Sunrise: { this.props.sunrise }</p> }
-        { this.props.sunset && <p>Sunset: { this.props.sunset }</p> }
+      <div className='weather__info'>
+        { this.props.city && this.props.country && 
+          <p className='weather__key'>
+            <span className="weather__value">
+            Location: { this.props.city }, { this.props.country }
+            </span>
+          </p> 
+        }
+        { this.props.temperature && 
+          <p className='weather__key'>
+            <span className="weather__value">
+            Temperature: { this.props.temperature }
+            </span>
+          </p>
+        }
+        { this.props.humidity && 
+          <p className='weather__key'>
+            <span className="weather__value">
+            Humidity: { this.props.humidity }
+            </span>
+          </p> 
+        }
+        { this.props.description && 
+          <p className='weather__key'>
+            <span className="weather__value">
+            Conditions: { this.props.description }
+            </span>
+          </p> 
+        }
+        { this.props.sunrise && 
+          <p className='weather__key'>
+            <span className="weather__value">
+            Sunrise: { this.props.sunrise }
+            </span>
+          </p> 
+        }
+        { this.props.sunset && 
+          <p className='weather__key'>
+            <span className="weather__value">
+            Sunset: { this.props.sunset }
+            </span>
+          </p> 
+        }
+        { this.props.error && 
+          <p className='weather__error'>
+          { this.props.error }
+          </p> 
+        }
       </div>
     );
   }
